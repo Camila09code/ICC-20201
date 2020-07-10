@@ -1,0 +1,82 @@
+from tkinter import *
+from tkinter import ttk
+
+def send_data():
+    username_data=username.get()
+    userlocation_data=str(userlocation.get())
+    userdirection_data=str(userdirection.get())
+
+    print(username_data, "\t", userlocation_data, "\t", userdirection_data)
+
+    archivo1=open("registration.txt", "a")
+    archivo1.write(username_data)
+    archivo1.write("\t")
+    archivo1.write(userlocation_data)
+    archivo1.write("\t")
+    archivo1.write(userdirection_data)
+    archivo1.write("\n")
+    archivo1.close()
+
+    username_entry.delete(0,END)
+    userlocation_entry.delete(0,END)
+    userdirection_entry.delete(0,END)
+
+def selected(event):
+    if clicked.get()=="January":
+        myLabel=Label(root, text="bien!".pack())
+    else:
+        myLabel = Label(root, text="clicked".get()).pack()
+
+def comboclick(event):
+    #myLabel = Label(root, text=combo.get()).pack()
+    if combo.get() == "January":
+        myLabel=Label(root,text="yees").pack()
+    else:
+        myLabel = Label(root, text=combo.get()).pack()
+
+
+root= Tk()
+root.geometry("600x450")
+root.title("BestHealth")
+root.resizable(False,False)
+root.config(background="SkyBlue1")
+main_title=Label(text="BestHealth", font=("Cambria", 16), background="SkyBlue3", foreground="#FFFFFF", width="250", height="1")
+main_title.pack()
+
+opciones=[
+    "a","b","c","January","February",
+     "Mar","April","a","b","c","d","e",
+     "f","g","h","i","j","k","l"
+]
+
+username_label=Label(text="Ingresa tu nombre", background="#DEE3F0")
+username_label.place(x=22,y=70)
+userlocation_label=Label(text="Selecciona tu distrito de residencia", background="#DEE3F0")
+userlocation_label.place(x=22,y=130)
+userdirection_label=Label(text="Ingresa tu dirección exacta", background="#DEE3F0")
+userdirection_label.place(x=22,y=190)
+preference2_label=Label(text="Selecciona un tipo de centro de salud", background="#DEE3F0")
+preference2_label.place(x=22,y=250)
+
+username= StringVar()
+userdirection=StringVar()
+preference2=StringVar()
+
+username_entry=Entry(textvariable=username, width="40")
+combo=ttk.Combobox(root, value=opciones)
+combo.current(0)
+combo.bind("comboboxselected", comboclick)
+
+
+userdirection_entry=Entry(textvariable=userdirection, width="40")
+preference2_entry=Entry(textvariable=preference2, width="40")
+
+username_entry.place(x=22, y=100)
+userdirection_entry.place(x=22, y=220)
+preference2_entry.place(x=22, y=280)
+combo.place(x=22,y=160)
+
+boton_registro= Button(root, text="Buscar centro de salud", command=send_data, width="30", height="2", background="#E74C3C")
+boton_registro.place(x=22, y=320)
+
+root.mainloop()
